@@ -3,6 +3,7 @@ package com.eg.yatc.core.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+
 @Entity
 public class UserProjection extends BaseEntity {
 
