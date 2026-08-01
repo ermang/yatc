@@ -35,6 +35,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers(HttpMethod.GET, "/tweet/timeline/*").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/tweet/*").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/tweet").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/tweet/like/*").authenticated()
