@@ -3,15 +3,15 @@ package com.eg.yatc.core.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_projection_id", "tweet_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "tweet_id"}))
 public class UserTweetLikeRel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    private UserProjection userProjection;
+    @Column(nullable = false)
+    private Long userId;
 
     @ManyToOne(optional = false)
     private Tweet tweet;
@@ -24,12 +24,12 @@ public class UserTweetLikeRel extends BaseEntity {
         this.id = id;
     }
 
-    public UserProjection getUserProjection() {
-        return userProjection;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserProjection(UserProjection userProjection) {
-        this.userProjection = userProjection;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Tweet getTweet() {

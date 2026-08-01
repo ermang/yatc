@@ -1,22 +1,24 @@
 package com.eg.yatc.core.service;
 
 import com.eg.yatc.core.entity.Tweet;
-import com.eg.yatc.core.entity.UserProjection;
 import com.eg.yatc.core.entity.UserTweetLikeRel;
 import com.eg.yatc.core.projection.ReadTweet;
 import com.eg.yatc.core.repo.TweetRepo;
 import com.eg.yatc.core.repo.UserProjectionRepo;
 import com.eg.yatc.core.repo.UserTweetLikeRelRepo;
+import com.eg.yatc.core.resp.ReadTimeline;
 import com.eg.yatc.core.servicereq.CreateTweetServiceReq;
 import com.eg.yatc.core.servicereq.DeleteTweetServiceReq;
 import com.eg.yatc.core.servicereq.LikeTweetServiceReq;
+import com.eg.yatc.core.servicereq.ReadTimelineServiceReq;
 import com.eg.yatc.core.util.ActiveUserResolver;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -35,28 +37,11 @@ public class TweetService {
 
     public void createTweet(CreateTweetServiceReq serviceReq) {
 
-        Optional<UserProjection> userProjectionOptional= userProjectionRepo.findById(serviceReq.appUserId());
-
-        if(userProjectionOptional.isPresent()) {
             Tweet t = new Tweet();
             t.setContent(serviceReq.content());
-            t.setUserProjection(userProjectionOptional.get());
+            t.setUserId(serviceReq.appUserId());
 
             tweetRepo.save(t);
-        } else {
-            UserProjection up = new UserProjection();
-            up.setId(serviceReq.appUserId());
-            up.setUsername(activeUserResolver.getActiveUser().getUsername());
-
-            up = userProjectionRepo.save(up);
-
-            Tweet t = new Tweet();
-            t.setContent(serviceReq.content());
-            t.setUserProjection(up);
-
-            tweetRepo.save(t);
-        }
-
     }
 
     public ReadTweet readTweet(long tweetId) {
@@ -69,7 +54,7 @@ public class TweetService {
         Tweet t = tweetRepo.findById(serviceReq.tweetId()).orElseThrow(
                 () -> new NoSuchElementException("service.validation.tweet.not.exists"));
 
-        if (!t.getUserProjection().getId().equals(serviceReq.userId())) {
+        if (!t.getUserId().equals(serviceReq.userId())) {
             throw new AuthorizationDeniedException("service.validation.tweet.not.owned.by.user");
         }
         else {
@@ -83,7 +68,7 @@ public class TweetService {
         Tweet t = tweetRepo.findById(serviceReq.tweetId()).orElseThrow(
                 () -> new NoSuchElementException("service.validation.tweet.not.exists"));
 
-        boolean alreadyLiked = userTweetLikeRelRepo.existsByTweetIdAndUserProjectionId(serviceReq.tweetId(), serviceReq.userId());
+        boolean alreadyLiked = userTweetLikeRelRepo.existsByTweetIdAndUserId(serviceReq.tweetId(), serviceReq.userId());
 
         if (alreadyLiked)
             throw new UnsupportedOperationException("service.validation.tweet.already.liked");
@@ -94,8 +79,19 @@ public class TweetService {
 
         UserTweetLikeRel likeRel = new UserTweetLikeRel();
         likeRel.setTweet(t);
-        likeRel.setUserProjection(t.getUserProjection());
+        likeRel.setUserId(t.getUserId());
 
         userTweetLikeRelRepo.save(likeRel);
+    }
+
+    public ReadTimeline readTimeline(ReadTimelineServiceReq serviceReq) {
+        if (serviceReq.tweetId() == null) {
+            List<ReadTweet> readTweetList = tweetRepo.getTimeline(serviceReq.userId(), PageRequest.of(0, 20));
+            ReadTimeline readTimeline = new ReadTimeline(readTweetList);
+
+            return readTimeline;
+        }
+
+        return null;
     }
 }

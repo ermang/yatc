@@ -14,8 +14,8 @@ public class Tweet extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne(optional = false)
-    private UserProjection userProjection;
+    @Column(nullable = false)
+    private Long userId;
 
     @Column(nullable = false)
     private Long likeCount = 0L;
@@ -36,12 +36,12 @@ public class Tweet extends BaseEntity {
         this.content = content;
     }
 
-    public UserProjection getUserProjection() {
-        return userProjection;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserProjection(UserProjection userProjection) {
-        this.userProjection = userProjection;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getLikeCount() {

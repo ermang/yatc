@@ -27,5 +27,5 @@ public interface UserTweetLikeRelRepo extends JpaRepository<UserTweetLikeRel, Lo
 
     void deleteAllByTweetId(long tweetId);
 
-    boolean existsByTweetIdAndUserProjectionId(Long tweetId, long UserProjectionId);
+    boolean existsByTweetIdAndUserId(Long tweetId, long UserProjectionId);
 }

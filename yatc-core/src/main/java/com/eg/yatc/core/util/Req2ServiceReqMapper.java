@@ -4,6 +4,7 @@ import com.eg.yatc.core.req.CreateTweetReq;
 import com.eg.yatc.core.servicereq.CreateTweetServiceReq;
 import com.eg.yatc.core.servicereq.DeleteTweetServiceReq;
 import com.eg.yatc.core.servicereq.LikeTweetServiceReq;
+import com.eg.yatc.core.servicereq.ReadTimelineServiceReq;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,6 +33,13 @@ public class Req2ServiceReqMapper {
     public DeleteTweetServiceReq deleteTweet2DeleteTweetServiceReq(long tweetId) {
         Long userId = activeUserResolver.getUserId();
         DeleteTweetServiceReq serviceReq = new DeleteTweetServiceReq(tweetId, userId);
+
+        return serviceReq;
+    }
+
+    public ReadTimelineServiceReq readTimeLineReq2readTimelineServiceReq(Long tweetId) {
+        Long userId = activeUserResolver.getUserId();
+        ReadTimelineServiceReq serviceReq = new ReadTimelineServiceReq(tweetId, userId);
 
         return serviceReq;
     }

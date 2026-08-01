@@ -3,7 +3,7 @@ package com.eg.yatc.core.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"follower_id", "followee_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"followerId", "followeeId"}))
 public class FollowProjection extends BaseEntity{
 
     @Id

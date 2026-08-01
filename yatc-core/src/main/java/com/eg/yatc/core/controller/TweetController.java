@@ -2,10 +2,12 @@ package com.eg.yatc.core.controller;
 
 import com.eg.yatc.core.projection.ReadTweet;
 import com.eg.yatc.core.req.CreateTweetReq;
+import com.eg.yatc.core.resp.ReadTimeline;
 import com.eg.yatc.core.service.TweetService;
 import com.eg.yatc.core.servicereq.CreateTweetServiceReq;
 import com.eg.yatc.core.servicereq.DeleteTweetServiceReq;
 import com.eg.yatc.core.servicereq.LikeTweetServiceReq;
+import com.eg.yatc.core.servicereq.ReadTimelineServiceReq;
 import com.eg.yatc.core.util.Req2ServiceReqMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,14 @@ public class TweetController {
         ReadTweet readTweet = tweetService.readTweet(tweetId);
 
         return readTweet;
+    }
+
+    @GetMapping("/timeline")
+    public ReadTimeline readTimeline(@RequestParam(required = false) Long tweetId){
+        ReadTimelineServiceReq serviceReq = req2ServiceReqMapper.readTimeLineReq2readTimelineServiceReq(tweetId);
+        ReadTimeline readTimeline = tweetService.readTimeline(serviceReq);
+
+        return readTimeline;
     }
 
     @DeleteMapping("/{tweetId}")
