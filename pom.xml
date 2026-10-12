@@ -14,14 +14,6 @@
         <module>yatc-user</module>
         <module>yatc-gateway</module>
         <module>yatc-core</module>
-<!--        <module>yaofom-config</module>-->
-<!--        <module>yaofom-service-discovery</module>-->
-
-
-<!--        &lt;!&ndash;        <module>yaofom-product</module>&ndash;&gt;-->
-<!--        <module>yaofom-common</module>-->
-<!--        <module>yaofom-diner</module>-->
-<!--        <module>yaofom-order</module>-->
     </modules>
 
     <parent>
