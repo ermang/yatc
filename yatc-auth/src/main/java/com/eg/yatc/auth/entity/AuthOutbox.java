@@ -1,13 +1,14 @@
-package com.eg.yatc.user.entity;
+package com.eg.yatc.auth.entity;
 
-import com.eg.yatc.user.constant.OutboxStatus;
+
+import com.eg.yatc.auth.constant.OutboxStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 @Entity
-public class OutboxEvent extends BaseEntity {
+public class AuthOutbox extends BaseEntity {
 
     @Column(nullable = false)
     private String event;

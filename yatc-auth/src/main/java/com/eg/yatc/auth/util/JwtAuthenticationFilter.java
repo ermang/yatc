@@ -1,4 +1,4 @@
-package com.eg.yatc.user.util;
+package com.eg.yatc.auth.util;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

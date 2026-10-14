@@ -1,22 +1,26 @@
-package com.eg.yatc.user.controller;
+package com.eg.yatc.auth.controller;
 
 
-import com.eg.yatc.user.req.CreateUserReq;
-import com.eg.yatc.user.req.LoginReq;
-import com.eg.yatc.user.service.UserCommandService;
-import com.eg.yatc.user.servicereq.CreateUserServiceReq;
-import com.eg.yatc.user.util.CustomUserDetails;
-import com.eg.yatc.user.util.CustomUserDetailsService;
-import com.eg.yatc.user.util.JwtUtil;
+
+import com.eg.yatc.auth.req.CreateUserReq;
+import com.eg.yatc.auth.req.LoginReq;
+import com.eg.yatc.auth.service.UserCommandService;
+import com.eg.yatc.auth.servicereq.CreateUserServiceReq;
+import com.eg.yatc.auth.util.CustomUserDetails;
+import com.eg.yatc.auth.util.CustomUserDetailsService;
+import com.eg.yatc.auth.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/auth")
+public class AuthController {
 
 
     private final UserCommandService userCommandService;
@@ -27,7 +31,7 @@ public class UserController {
     private final CustomUserDetailsService userDetailsService;
     //private final Req2ServiceReq req2ServiceReq;
 
-    public UserController(UserCommandService userCommandService, AuthenticationManager authManager, JwtUtil jwtService,
+    public AuthController(UserCommandService userCommandService, AuthenticationManager authManager, JwtUtil jwtService,
                           CustomUserDetailsService userDetailsService) {
         this.userCommandService = userCommandService;
         this.authManager = authManager;

@@ -1,7 +1,8 @@
-package com.eg.yatc.user.util;
+package com.eg.yatc.auth.util;
 
 
-import com.eg.yatc.user.entity.AppUser;
+
+import com.eg.yatc.auth.entity.AppIdentity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(AppUser user) {
+    public CustomUserDetails(AppIdentity user) {
         this.userId = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();

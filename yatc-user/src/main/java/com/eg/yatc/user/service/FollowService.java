@@ -1,13 +1,12 @@
 package com.eg.yatc.user.service;
 
-import com.eg.yatc.user.constant.OutboxStatus;
 import com.eg.yatc.user.entity.AppUser;
 import com.eg.yatc.user.entity.Follow;
-import com.eg.yatc.user.entity.OutboxEvent;
+import com.eg.yatc.user.entity.UserOutbox;
 import com.eg.yatc.user.event.FollowEvent;
 import com.eg.yatc.user.repo.AppUserRepo;
 import com.eg.yatc.user.repo.FollowRepo;
-import com.eg.yatc.user.repo.OutboxRepo;
+import com.eg.yatc.user.repo.UserOutboxRepo;
 import com.eg.yatc.user.resp.ReadFollowerListResp;
 import com.eg.yatc.user.resp.ReadFollowerResp;
 import com.eg.yatc.user.servicereq.FollowServiceReq;
@@ -27,14 +26,14 @@ public class FollowService {
 
     private final AppUserRepo appUserRepo;
     private final FollowRepo followRepo;
-    private final OutboxRepo outboxRepo;
+    private final UserOutboxRepo userOutboxRepo;
     private final KafkaTemplate kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public FollowService(AppUserRepo appUserRepo, FollowRepo followRepo, OutboxRepo outboxRepo, KafkaTemplate kafkaTemplate, ObjectMapper objectMapper) {
+    public FollowService(AppUserRepo appUserRepo, FollowRepo followRepo, UserOutboxRepo userOutboxRepo, KafkaTemplate kafkaTemplate, ObjectMapper objectMapper) {
         this.appUserRepo = appUserRepo;
         this.followRepo = followRepo;
-        this.outboxRepo = outboxRepo;
+        this.userOutboxRepo = userOutboxRepo;
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;
     }
@@ -55,14 +54,14 @@ public class FollowService {
 
         followRepo.save(f);
 
-        OutboxEvent o = new OutboxEvent();
+        UserOutbox o = new UserOutbox();
         o.setTopicName("follow-t");
         try {
             o.setEvent(objectMapper.writeValueAsString(new FollowEvent(follower.getId(), followee.getId())));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        outboxRepo.save(o);
+        userOutboxRepo.save(o);
 
 //        kafkaTemplate.send("follow-t", new FollowEvent(follower.getId(), followee.getId()));
     }

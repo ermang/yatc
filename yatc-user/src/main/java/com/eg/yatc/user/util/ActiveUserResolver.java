@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActiveUserResolver {
 
-    public CustomUserDetails getActiveUser() {
-        CustomUserDetails userDetails =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public CustomPrincipal getActiveUser() {
+        CustomPrincipal userDetails =  (CustomPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //if (userDetails instanceof C)
         //CustomPrincipal customPrincipal =  (CustomPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -18,12 +18,12 @@ public class ActiveUserResolver {
         else
             System.out.println("*****NO_CUSTOM*****");
 
-        return (CustomUserDetails)userDetails;
+        return (CustomPrincipal)userDetails;
     }
 
     public Long getUserId() {
 
-        Long userId = getActiveUser().getUserId();
+        Long userId = getActiveUser().getId();
 
         return userId;
     }

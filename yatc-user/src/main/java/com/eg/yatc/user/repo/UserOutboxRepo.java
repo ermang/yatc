@@ -2,13 +2,13 @@ package com.eg.yatc.user.repo;
 
 
 import com.eg.yatc.user.constant.OutboxStatus;
-import com.eg.yatc.user.entity.OutboxEvent;
+import com.eg.yatc.user.entity.UserOutbox;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface OutboxRepo extends JpaRepository<OutboxEvent, Long> {
-    List<OutboxEvent> findTop50ByStatusNotAndRetryCountLessThanOrderByIdAsc(OutboxStatus outboxStatus, int i);
+public interface UserOutboxRepo extends JpaRepository<UserOutbox, Long> {
+    List<UserOutbox> findTop50ByStatusNotAndRetryCountLessThanOrderByIdAsc(OutboxStatus outboxStatus, int i);
     //boolean existsByFollowerIdAndFolloweeId(long followerId, long followeeId);
 
 
