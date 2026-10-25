@@ -39,3 +39,6 @@ build/
 .DS_Store
 
 .idea/
+
+#CUSTOM_BY_ME
+logs/

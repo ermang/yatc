@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -61,4 +62,23 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public CommonsRequestLoggingFilter commonsRequestLoggingFilter() {
+//        CommonsRequestLoggingFilter crlf = new CommonsRequestLoggingFilter();
+//
+//        crlf.setIncludeQueryString(true);
+//        crlf.setIncludeClientInfo(true);
+//        crlf.setIncludeHeaders(true);
+//        crlf.setIncludePayload(true);
+//
+//
+//        crlf.setHeaderPredicate(header ->
+//                !header.equalsIgnoreCase("Authorization"));
+//
+//        crlf.setBeforeMessagePrefix("REQUEST: ");
+//        crlf.setAfterMessagePrefix("REQUEST PROCESSED: ");
+//
+//        return crlf;
+//    }
 }

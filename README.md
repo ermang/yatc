@@ -21,6 +21,7 @@ yatc is a simple twitter clone - microservice arch.
 * jdk 17  
 * maven  
 * postgres
+* kafka
 
 ## 2.How to build&run
 
@@ -35,9 +36,17 @@ java -jar yafi-1.0-SNAPSHOT.jar
 open com.eg.yafi.Application  
 IDE should show a play icon at the class name. Click it
 
-### SOMETHING SOMETHING
+### EVERYTHING LOCAL SETUP MODE 
+*  ./bin/elasticsearch
+* ./bin/kibana
+* ./filebeat -e -c filebeat.yml
+* java -jar zipkin.jar
+
 
 * service discovery eureka http://localhost:8761/
+* Elasticsearch http://localhost:9200/
+* Kibana http://localhost:5601
+* Zipkin http://127.0.0.1:9411/zipkin/
 
 ### 3.Package Structure
 
